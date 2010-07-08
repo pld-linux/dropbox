@@ -1,9 +1,11 @@
-# Upstream: Dropbox Support (https://www.dropbox.com/ticket)
-
+# NOTES:
+# - Upstream Dropbox Support (https://www.dropbox.com/ticket)
+# - Download instructions (click the download link to find current version):
+#   http://wiki.dropbox.com/TipsAndTricks/TextBasedLinuxInstall
 Summary:	Sync and backup files between computers
 Name:		dropbox
 Version:	0.7.110
-Release:	0.8
+Release:	0.9
 License:	Proprietary
 Group:		Daemons
 URL:		http://www.dropbox.com/
@@ -61,6 +63,9 @@ ln -sf dropbox library.zip
 # /usr/lib64/dropbox/libz.so.1: version `ZLIB_1.2.3.3' not found (required by /usr/lib64/libxml2.so.2)
 rm -f libz.so.1
 
+# don't really need test at runtime
+rm -rf ncrypt-*.egg/ncrypt/test
+
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_bindir}
@@ -85,5 +90,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/dropbox/dropbox
 %attr(755,root,root) %{_libdir}/dropbox/dropboxd
 %{_libdir}/dropbox/library.zip
-%{_libdir}/dropbox/ncrypt-*.egg
-%{_libdir}/dropbox/netifaces-*.egg
+
+%dir %{_libdir}/dropbox/ncrypt-*.egg
+%attr(755,root,root) %{_libdir}/dropbox/ncrypt-*.egg/*.so
+%{_libdir}/dropbox/ncrypt-*.egg/*.pyc
+%{_libdir}/dropbox/ncrypt-*.egg/ncrypt
+%{_libdir}/dropbox/ncrypt-*.egg/EGG-INFO
+
+%dir %{_libdir}/dropbox/netifaces-*.egg
+%attr(755,root,root) %{_libdir}/dropbox/netifaces-*.egg/*.so
+%{_libdir}/dropbox/netifaces-*.egg/*.pyc
+%{_libdir}/dropbox/netifaces-*.egg/EGG-INFO
