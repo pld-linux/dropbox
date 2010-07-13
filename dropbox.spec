@@ -5,7 +5,7 @@
 Summary:	Sync and backup files between computers
 Name:		dropbox
 Version:	0.7.110
-Release:	0.9
+Release:	0.10
 License:	Proprietary
 Group:		Daemons
 URL:		http://www.dropbox.com/
@@ -18,6 +18,7 @@ NoSource:	1
 BuildRequires:	rpmbuild(macros) >= 1.566
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.15.1
+Conflicts:	nautilus-dropbox < 0.6.3-2
 ExclusiveArch:	%{ix86} %{x8664}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
