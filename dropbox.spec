@@ -34,6 +34,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 # debuginfo wouldn't be useful
 %define		_enable_debug_packages	0
 
+# prelinked library, it is missing some cairo symbols
+%define		skip_post_check_so	libwx_gtk2ud_core-2.8.so.0
+
 %description
 Dropbox is software that syncs your files online and across your
 computers.
