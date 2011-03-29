@@ -2,18 +2,19 @@
 # - Upstream Dropbox Support (https://www.dropbox.com/ticket)
 # - Download instructions (click the download link to find current version):
 #   http://wiki.dropbox.com/TipsAndTricks/TextBasedLinuxInstall
+#   http://www.dropbox.com/downloading?os=lnx
 Summary:	Sync and backup files between computers
 Name:		dropbox
-Version:	0.7.110
-Release:	0.10
+Version:	1.0.20
+Release:	0.4
 License:	Proprietary
 Group:		Daemons
 URL:		http://www.dropbox.com/
 Source0:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86-%{version}.tar.gz
-# NoSource0-md5:	e6cb1751ba33542a82b794cea7dc8dbd
+# NoSource0-md5:	2bee70c090d48485bf6da98099d975f7
 NoSource:	0
 Source1:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86_64-%{version}.tar.gz
-# NoSource1-md5:	434fb3451d1f638bddde2f5691beb426
+# NoSource1-md5:	ee0bde299a11d1edb95a192856822aad
 NoSource:	1
 BuildRequires:	rpmbuild(macros) >= 1.566
 BuildRequires:	sed >= 4.0
@@ -26,7 +27,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_noautoprovfiles	%{_libdir}/%{name}
 
 # provided by package itself, but autodeps disabled
-%define		_noautoreq		libcrypto.so libssl.so libwx_.*.so
+%define		_noautoreq		libcrypto.so libssl.so libwx_.*.so librsync.so.1
 
 # a zip and executable at the same time
 %define		_noautostrip	.*/library.zip\\|.*/dropbox
@@ -64,11 +65,11 @@ ln -sf dropbox library.zip
 # use system lib, or we get weird errors like:
 # (dropbox:13225): Gtk-WARNING **: Error loading theme icon 'gtk-ok' for stock:
 # Unable to load image-loading module: /usr/lib64/gtk-2.0/2.10.0/loaders/svg_loader.so:
-# /usr/lib64/dropbox/libz.so.1: version `ZLIB_1.2.3.3' not found (required by /usr/lib64/libxml2.so.2)
-rm -f libz.so.1
+# %{_libdir}/dropbox/libz.so.1: version `ZLIB_1.2.3.3' not found (required by /usr/lib64/libxml2.so.2)
+%{__rm} libz.so.1
 
 # don't really need test at runtime
-rm -rf ncrypt-*.egg/ncrypt/test
+%{__rm} -r ncrypt-*.egg/ncrypt/test
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -80,14 +81,14 @@ install -d $RPM_BUILD_ROOT%{_libdir}/dropbox
 cp -a . $RPM_BUILD_ROOT%{_libdir}/dropbox
 
 # in doc
-rm -f $RPM_BUILD_ROOT%{_libdir}/dropbox/{ACKNOWLEDGEMENTS,VERSION}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/dropbox/{ACKNOWLEDGEMENTS,VERSION,README}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc ACKNOWLEDGEMENTS VERSION
+%doc ACKNOWLEDGEMENTS VERSION README
 %attr(755,root,root) %{_bindir}/dropboxd
 %dir %{_libdir}/dropbox
 %attr(755,root,root) %{_libdir}/dropbox/*.so*
@@ -105,3 +106,5 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/dropbox/netifaces-*.egg/*.so
 %{_libdir}/dropbox/netifaces-*.egg/*.pyc
 %{_libdir}/dropbox/netifaces-*.egg/EGG-INFO
+
+%{_libdir}/dropbox/icons
