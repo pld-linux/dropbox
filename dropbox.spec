@@ -68,6 +68,9 @@ ln -sf dropbox library.zip
 # %{_libdir}/dropbox/libz.so.1: version `ZLIB_1.2.3.3' not found (required by /usr/lib64/libxml2.so.2)
 %{__rm} libz.so.1
 
+# libdbus and dbus-python
+
+
 # don't really need test at runtime
 %{__rm} -r ncrypt-*.egg/ncrypt/test
 
