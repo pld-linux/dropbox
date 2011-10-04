@@ -5,16 +5,16 @@
 #   http://www.dropbox.com/downloading?os=lnx
 Summary:	Sync and backup files between computers
 Name:		dropbox
-Version:	1.1.35
+Version:	1.1.45
 Release:	0.1
 License:	Proprietary
 Group:		Daemons
 URL:		http://www.dropbox.com/
 Source0:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86-%{version}.tar.gz
-# NoSource0-md5:	26f65450fd3e7d95e796a871dd7a53df
+# NoSource0-md5:	e9c7cb6d97dfa917d3fb99d82cd1c132
 NoSource:	0
 Source1:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86_64-%{version}.tar.gz
-# NoSource1-md5:	a3956852eba85120c741fe914c01d3ad
+# NoSource1-md5:	7f22a5078ebb0ea6f43c32d284a1ee51
 NoSource:	1
 BuildRequires:	rpmbuild(macros) >= 1.566
 BuildRequires:	sed >= 4.0
