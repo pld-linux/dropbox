@@ -6,7 +6,7 @@
 Summary:	Sync and backup files between computers
 Name:		dropbox
 Version:	1.1.45
-Release:	0.1
+Release:	1
 License:	Proprietary
 Group:		Daemons
 URL:		http://www.dropbox.com/
@@ -27,7 +27,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_noautoprovfiles	%{_libdir}/%{name}
 
 # provided by package itself, but autodeps disabled
-%define		_noautoreq		libcrypto.so libssl.so libwx_.*.so librsync.so.1
+%define		_noautoreq		libcrypto.so libssl.so libwx_.*.so librsync.so.1 libpng12.so
 
 # a zip and executable at the same time
 %define		_noautostrip	.*/library.zip\\|.*/dropbox
