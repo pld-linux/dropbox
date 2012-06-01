@@ -1,20 +1,20 @@
 # NOTES:
 # - Upstream Dropbox Support (https://www.dropbox.com/ticket)
 # - Download instructions (click the download link to find current version):
-#   http://wiki.dropbox.com/TipsAndTricks/TextBasedLinuxInstall
 #   http://www.dropbox.com/downloading?os=lnx
+#   http://wiki.dropbox.com/TipsAndTricks/TextBasedLinuxInstall
 Summary:	Sync and backup files between computers
 Name:		dropbox
-Version:	1.1.45
+Version:	1.4.7
 Release:	1
 License:	Proprietary
 Group:		Daemons
 URL:		http://www.dropbox.com/
 Source0:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86-%{version}.tar.gz
-# NoSource0-md5:	e9c7cb6d97dfa917d3fb99d82cd1c132
+# NoSource0-md5:	e21b3ae4da74ca9925f08535e086685a
 NoSource:	0
 Source1:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86_64-%{version}.tar.gz
-# NoSource1-md5:	7f22a5078ebb0ea6f43c32d284a1ee51
+# NoSource1-md5:	2f82c3a6451851781490ee6968c9b539
 NoSource:	1
 BuildRequires:	rpmbuild(macros) >= 1.566
 BuildRequires:	sed >= 4.0
@@ -57,10 +57,17 @@ them from any computer or mobile device using the Dropbox website.
 %{__tar} --strip-components=1 -xzf %{SOURCE1}
 %endif
 
+# no need to package this
+%{__rm} setuptools-0.6c11-py2.5.egg
+
 # make into symlink, looks cleaner than hardlink:
 # we can attach executable attrs to binary and leave no attrs for symlink in
 # %files section.
 ln -sf dropbox library.zip
+
+# fun, let's delete non-linux files from archive
+unzip -l library.zip | grep -E 'arch/(mac|win32)' | awk '{print $NF}' > arch.delete
+zip library.zip -d $(cat arch.delete)
 
 # use system lib, or we get weird errors like:
 # (dropbox:13225): Gtk-WARNING **: Error loading theme icon 'gtk-ok' for stock:
@@ -69,10 +76,6 @@ ln -sf dropbox library.zip
 %{__rm} libz.so.1
 
 # libdbus and dbus-python
-
-
-# don't really need test at runtime
-%{__rm} -r ncrypt-*.egg/ncrypt/test
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -98,12 +101,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/dropbox/dropbox
 %attr(755,root,root) %{_libdir}/dropbox/dropboxd
 %{_libdir}/dropbox/library.zip
-
-%dir %{_libdir}/dropbox/ncrypt-*.egg
-%attr(755,root,root) %{_libdir}/dropbox/ncrypt-*.egg/*.so
-%{_libdir}/dropbox/ncrypt-*.egg/*.pyc
-%{_libdir}/dropbox/ncrypt-*.egg/ncrypt
-%{_libdir}/dropbox/ncrypt-*.egg/EGG-INFO
 
 %dir %{_libdir}/dropbox/netifaces-*.egg
 %attr(755,root,root) %{_libdir}/dropbox/netifaces-*.egg/*.so
