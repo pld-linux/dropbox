@@ -5,16 +5,16 @@
 #   http://wiki.dropbox.com/TipsAndTricks/TextBasedLinuxInstall
 Summary:	Sync and backup files between computers
 Name:		dropbox
-Version:	1.4.7
-Release:	1
+Version:	1.4.17
+Release:	0.1
 License:	Proprietary
 Group:		Daemons
 URL:		http://www.dropbox.com/
 Source0:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86-%{version}.tar.gz
-# NoSource0-md5:	e21b3ae4da74ca9925f08535e086685a
+# NoSource0-md5:	404ab2514c736a7421ec48a0ea88bbbc
 NoSource:	0
 Source1:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86_64-%{version}.tar.gz
-# NoSource1-md5:	2f82c3a6451851781490ee6968c9b539
+# NoSource1-md5:	7a15923bae36f27387b6865c75701c2a
 NoSource:	1
 BuildRequires:	rpmbuild(macros) >= 1.566
 BuildRequires:	sed >= 4.0
@@ -85,6 +85,7 @@ ln -s %{_libdir}/dropbox/dropboxd $RPM_BUILD_ROOT%{_bindir}/dropboxd
 # install everything else
 install -d $RPM_BUILD_ROOT%{_libdir}/dropbox
 cp -a . $RPM_BUILD_ROOT%{_libdir}/dropbox
+rm -f $RPM_BUILD_ROOT%{_libdir}/dropbox/arch.delete
 
 # in doc
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/dropbox/{ACKNOWLEDGEMENTS,VERSION,README}
