@@ -6,16 +6,16 @@
 #   http://wiki.dropbox.com/TipsAndTricks/TextBasedLinuxInstall
 Summary:	Sync and backup files between computers
 Name:		dropbox
-Version:	1.6.18
+Version:	2.2.2
 Release:	1
 License:	Proprietary
 Group:		Daemons
 URL:		http://www.dropbox.com/
 Source0:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86-%{version}.tar.gz
-# NoSource0-md5:	d3132eb541698f460ca8160a26318a38
+# NoSource0-md5:	9608a1a1727adee78bcd00fa3b89e115
 NoSource:	0
 Source1:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86_64-%{version}.tar.gz
-# NoSource1-md5:	8ba99689a4c654572848f808b330bac4
+# NoSource1-md5:	6c79ff1428393598dc9befd548d7467c
 NoSource:	1
 BuildRequires:	rpmbuild(macros) >= 1.566
 BuildRequires:	sed >= 4.0
@@ -100,6 +100,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/dropbox
 %attr(755,root,root) %{_libdir}/%{name}/dropboxd
 %{_libdir}/%{name}/library.zip
+
+%dir %{_libdir}/%{name}/mock-*-py*.egg
+%{_libdir}/%{name}/mock-*-py*.egg/mock.py[co]
+%{_libdir}/%{name}/mock-*-py*.egg/EGG-INFO
 
 %dir %{_libdir}/%{name}/images
 %{_libdir}/%{name}/images/emblems
