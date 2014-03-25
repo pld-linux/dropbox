@@ -6,17 +6,17 @@
 #   http://wiki.dropbox.com/TipsAndTricks/TextBasedLinuxInstall
 Summary:	Sync and backup files between computers
 Name:		dropbox
-Version:	2.2.13
+Version:	2.6.25
 Release:	1
 License:	Proprietary
 Group:		Daemons
-URL:		http://www.dropbox.com/
 Source0:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86-%{version}.tar.gz
-# NoSource0-md5:	e69279eabdd37670ab4430be2f44dfae
+# NoSource0-md5:	4521809aa11f5b8628d36b4462622dd8
 NoSource:	0
 Source1:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86_64-%{version}.tar.gz
-# NoSource1-md5:	2b5b5981aa6bf6c295b17f88551dead2
+# NoSource1-md5:	a303933f7abc52c13a4b03067c87c754
 NoSource:	1
+URL:		http://www.dropbox.com/
 BuildRequires:	rpmbuild(macros) >= 1.566
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.15.1
@@ -28,7 +28,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_noautoprovfiles	%{_libdir}/%{name}
 
 # provided by package itself, but autodeps disabled
-%define		_noautoreq		libcrypto.so libssl.so libwx_.*.so librsync.so.1 libpng12.so
+%define		_noautoreq		libwx_.*.so librsync.so.1 libffi.so.6
 
 # a zip and executable at the same time
 %define		_noautostrip	.*/library.zip\\|.*/dropbox
@@ -59,7 +59,8 @@ them from any computer or mobile device using the Dropbox website.
 %endif
 
 # no need to package this
-%{__rm} -r distribute-0.6.26-py2.7.egg
+# altho system python is also 2.7, don't know how to enforce using it system libs
+#%{__rm} -r distribute-0.6.26-py2.7.egg
 
 # libraries to be taken from system
 # for a in *.so*; do ls -ld /lib/$a /usr/lib/$a; done 2>/dev/null
@@ -101,9 +102,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/dropboxd
 %{_libdir}/%{name}/library.zip
 
-%dir %{_libdir}/%{name}/mock-*-py*.egg
-%{_libdir}/%{name}/mock-*-py*.egg/mock.py[co]
-%{_libdir}/%{name}/mock-*-py*.egg/EGG-INFO
+%{_libdir}/%{name}/cffi-*-py*.egg
+%{_libdir}/%{name}/distribute-*-py*.egg
+%{_libdir}/%{name}/dropbox_sqlite_ext-*-py*.egg
+%{_libdir}/%{name}/mock-*-py*.egg
+%{_libdir}/%{name}/pycparser-*-py*.egg-info
 
 %dir %{_libdir}/%{name}/images
 %{_libdir}/%{name}/images/emblems
