@@ -84,8 +84,10 @@ Gtk+2 Systray of Dropbox Daemon status.
 ln -sf dropbox library.zip
 
 # fun, let's delete non-linux files from archive
-unzip -l library.zip | grep -E 'arch/(mac|win32)|pynt|ui/cocoa|unittest' | awk '{print $NF}' > lib.delete
-# TODO: also pymac could be cleaned if pymac.constants is not imported
+unzip -l library.zip | \
+	grep -E '(arch|dropbox)/(mac|win32)|_(win32|mac).py|pynt|pymac|ui/cocoa|unittest' | \
+	grep -vE 'pymac/(__init__|constants|types|lazydll|lazyframework).py' | \
+	awk '{print $NF}' > lib.delete
 zip library.zip -d $(cat lib.delete)
 
 %install
