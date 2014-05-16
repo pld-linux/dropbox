@@ -1,3 +1,6 @@
+# TODO
+# - avoid dropboxd relaunching itself with newer version if there's update available (disable auto updating):
+#   glen     25034 19.9  1.5 1496132 81256 pts/46  Sl+  11:02   1:02 /home/glen/.dropbox-dist/dropbox /newerversion
 # NOTES:
 # - Upstream Dropbox Support (https://www.dropbox.com/ticket)
 # - Release Notes (check new versions here): https://www.dropbox.com/release_notes
@@ -6,15 +9,15 @@
 #   http://wiki.dropbox.com/TipsAndTricks/TextBasedLinuxInstall
 Summary:	Sync and backup files between computers
 Name:		dropbox
-Version:	2.6.31
+Version:	2.6.33
 Release:	1
 License:	Proprietary
 Group:		Daemons
 Source0:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86-%{version}.tar.gz
-# NoSource0-md5:	a0fa0839f9080558c3424d560654b01b
+# NoSource0-md5:	4155a85791150a40f97cff68ca2e0668
 NoSource:	0
 Source1:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86_64-%{version}.tar.gz
-# NoSource1-md5:	113a5015503558ac88366078abfcc7ba
+# NoSource1-md5:	72e52d33ab69f15be40247dd42c33d92
 NoSource:	1
 URL:		http://www.dropbox.com/
 BuildRequires:	rpmbuild(macros) >= 1.566
@@ -49,6 +52,14 @@ instantly available on any of your other computers that you've
 installed Dropbox on (Windows, Mac, and Linux too!) Because a copy of
 your files are stored on Dropbox's secure servers, you can also access
 them from any computer or mobile device using the Dropbox website.
+
+%package gui
+Summary:	Gtk+2 GUI of Dropbox
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+
+%description gui
+Gtk+2 Systray of Dropbox Daemon status.
 
 %prep
 %setup -qcT
@@ -109,6 +120,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/mock-*-py*.egg
 %{_libdir}/%{name}/pycparser-*-py*.egg-info
 
+%exclude %{_libdir}/%{name}/libwx_gtk2*.so.*
+
+%files gui
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/libwx_gtk2*.so.*
 %dir %{_libdir}/%{name}/images
 %{_libdir}/%{name}/images/emblems
 %{_libdir}/%{name}/images/hicolor
