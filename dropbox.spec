@@ -23,6 +23,7 @@ URL:		http://www.dropbox.com/
 BuildRequires:	rpmbuild(macros) >= 1.566
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.15.1
+BuildRequires:	unzip
 BuildRequires:	zip
 Conflicts:	nautilus-dropbox < 0.6.3-2
 ExclusiveArch:	%{ix86} %{x8664}
