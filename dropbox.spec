@@ -9,15 +9,15 @@
 #   http://wiki.dropbox.com/TipsAndTricks/TextBasedLinuxInstall
 Summary:	Sync and backup files between computers
 Name:		dropbox
-Version:	2.8.2
+Version:	2.10.3
 Release:	1
 License:	Proprietary
 Group:		Daemons
 Source0:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86-%{version}.tar.gz
-# NoSource0-md5:	edd6e4dd3c4cf677668887ebbb7862c9
+# NoSource0-md5:	4ab5cd2ba514e46eee6208af650ceb73
 NoSource:	0
 Source1:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86_64-%{version}.tar.gz
-# NoSource1-md5:	e5410eb64aa407be2d73c907417e75d3
+# NoSource1-md5:	2e44b9d1038768929425712cc0f448fd
 NoSource:	1
 URL:		http://www.dropbox.com/
 BuildRequires:	rpmbuild(macros) >= 1.566
@@ -70,6 +70,7 @@ Gtk+2 Systray of Dropbox Daemon status.
 %ifarch %{x8664}
 %{__tar} --strip-components=1 -xzf %{SOURCE1}
 %endif
+mv dropbox-lnx.*-%{version}/* .
 
 # no need to package this
 # altho system python is also 2.7, don't know how to enforce using it system libs
