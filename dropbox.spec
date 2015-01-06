@@ -9,15 +9,15 @@
 #   http://wiki.dropbox.com/TipsAndTricks/TextBasedLinuxInstall
 Summary:	Sync and backup files between computers
 Name:		dropbox
-Version:	2.10.52
-Release:	1
+Version:	3.0.3
+Release:	0.3
 License:	Proprietary
 Group:		Daemons
 Source0:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86-%{version}.tar.gz
-# NoSource0-md5:	e573ed3b2dad210d2a4769e483051729
+# NoSource0-md5:	b8ae37ef387496ebae10d8ad6c0664e1
 NoSource:	0
 Source1:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86_64-%{version}.tar.gz
-# NoSource1-md5:	e23a1d44e287a265ae9d57a0b2d6188c
+# NoSource1-md5:	72c2a2a20b3916a2aeede0f0ab93dd08
 NoSource:	1
 URL:		http://www.dropbox.com/
 BuildRequires:	rpmbuild(macros) >= 1.566
@@ -32,8 +32,11 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 # generate no Provides from private modules
 %define		_noautoprovfiles	%{_libdir}/%{name}
 
+# libicu-42, but pld th already has 54
+%define		icu_libs	libicudata.so.42 libicui18n.so.42 libicuuc.so.42
+
 # provided by package itself, but autodeps disabled
-%define		_noautoreq		libwx_.*.so librsync.so.1 libffi.so.6
+%define		_noautoreq		libwx_.*.so librsync.so.1 libffi.so.6 %{icu_libs}
 
 # a zip and executable at the same time
 %define		_noautostrip	.*/library.zip\\|.*/dropbox
@@ -42,7 +45,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_enable_debug_packages	0
 
 # prelinked library, it is missing some cairo symbols
-%define		skip_post_check_so	libwx_gtk2ud_core-2.8.so.0
+#define		skip_post_check_so	libwx_gtk2ud_core-2.8.so.0
 
 %description
 Dropbox is software that syncs your files online and across your
@@ -78,7 +81,7 @@ mv dropbox-lnx.*-%{version}/* .
 
 # libraries to be taken from system
 # for a in *.so*; do ls -ld /lib/$a /usr/lib/$a; done 2>/dev/null
-%{__rm} libpng12.so.0 libbz2.so.1.0 libpopt.so.0
+%{__rm} libpopt.so.0
 
 # make into symlink, looks cleaner than hardlink:
 # we can attach executable attrs to binary and leave no attrs for symlink in
@@ -125,11 +128,20 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/pycparser-*-py*.egg-info
 %{_libdir}/%{name}/requests-*-py*.egg
 
-%exclude %{_libdir}/%{name}/libwx_gtk2*.so.*
+# GUI parts
+%exclude %{_libdir}/%{name}/PyQt5.*.so
+%exclude %{_libdir}/%{name}/libQt5*.so.5
+%exclude %{_libdir}/%{name}/dbus.mainloop.pyqt5.so
 
 %files gui
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/libwx_gtk2*.so.*
+%attr(755,root,root) %{_libdir}/%{name}/PyQt5.*.so
+%attr(755,root,root) %{_libdir}/%{name}/libQt5*.so.5
+%attr(755,root,root) %{_libdir}/%{name}/dbus.mainloop.pyqt5.so
+%dir %{_libdir}/%{name}/plugins
+%dir %{_libdir}/%{name}/plugins/platforms
+%attr(755,root,root) %{_libdir}/%{name}/plugins/platforms/libqxcb.so
+%{_libdir}/%{name}/qt.conf
 %dir %{_libdir}/%{name}/images
 %{_libdir}/%{name}/images/emblems
 %{_libdir}/%{name}/images/hicolor
