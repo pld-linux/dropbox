@@ -10,7 +10,7 @@
 Summary:	Sync and backup files between computers
 Name:		dropbox
 Version:	3.0.3
-Release:	0.3
+Release:	0.6
 License:	Proprietary
 Group:		Daemons
 Source0:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86-%{version}.tar.gz
@@ -36,7 +36,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		icu_libs	libicudata.so.42 libicui18n.so.42 libicuuc.so.42
 
 # provided by package itself, but autodeps disabled
-%define		_noautoreq		libwx_.*.so librsync.so.1 libffi.so.6 %{icu_libs}
+%define		_noautoreq		libwx_.*.so %{icu_libs}
 
 # a zip and executable at the same time
 %define		_noautostrip	.*/library.zip\\|.*/dropbox
@@ -80,8 +80,10 @@ mv dropbox-lnx.*-%{version}/* .
 #%{__rm} -r distribute-0.6.26-py2.7.egg
 
 # libraries to be taken from system
-# for a in *.so*; do ls -ld /lib/$a /usr/lib/$a; done 2>/dev/null
-%{__rm} libpopt.so.0
+# for a in *.so*; do ls -ld /lib64/$a %{_libdir}/$a; done 2>/dev/null
+%{__rm} libpopt.so.0 libdrm.so.2 libGL.so.1 libsqlite3.so.0 libxml2.so.2 libxslt.so.1
+#%{__rm} libffi.so.6 librsync.so.1
+#%{__rm} libQt5{Core,DBus,Gui,Network,OpenGL,PrintSupport,Qml,Quick,Sql,WebKit,WebKitWidgets,Widgets}.so.5
 
 # make into symlink, looks cleaner than hardlink:
 # we can attach executable attrs to binary and leave no attrs for symlink in
