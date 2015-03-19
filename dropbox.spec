@@ -9,15 +9,15 @@
 #   http://wiki.dropbox.com/TipsAndTricks/TextBasedLinuxInstall
 Summary:	Sync and backup files between computers
 Name:		dropbox
-Version:	3.0.3
-Release:	0.6
+Version:	3.2.9
+Release:	1
 License:	Proprietary
 Group:		Daemons
 Source0:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86-%{version}.tar.gz
-# NoSource0-md5:	b8ae37ef387496ebae10d8ad6c0664e1
+# NoSource0-md5:	3e231c5171440270c788f897d9230930
 NoSource:	0
 Source1:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86_64-%{version}.tar.gz
-# NoSource1-md5:	72c2a2a20b3916a2aeede0f0ab93dd08
+# NoSource1-md5:	2965ebc46e8f3d77a4f35db264e138d4
 NoSource:	1
 URL:		http://www.dropbox.com/
 BuildRequires:	rpmbuild(macros) >= 1.566
@@ -81,7 +81,7 @@ mv dropbox-lnx.*-%{version}/* .
 
 # libraries to be taken from system
 # for a in *.so*; do ls -ld /lib64/$a %{_libdir}/$a; done 2>/dev/null
-%{__rm} libpopt.so.0 libdrm.so.2 libGL.so.1 libsqlite3.so.0 libxml2.so.2 libxslt.so.1
+%{__rm} libpopt.so.0 libdrm.so.2 libGL.so.1
 #%{__rm} libffi.so.6 librsync.so.1
 #%{__rm} libQt5{Core,DBus,Gui,Network,OpenGL,PrintSupport,Qml,Quick,Sql,WebKit,WebKitWidgets,Widgets}.so.5
 
@@ -121,14 +121,19 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/*.so*
 %attr(755,root,root) %{_libdir}/%{name}/dropbox
 %attr(755,root,root) %{_libdir}/%{name}/dropboxd
+%attr(755,root,root) %{_libdir}/%{name}/wmctrl
 %{_libdir}/%{name}/library.zip
 
+%{_libdir}/%{name}/backports.ssl_match_hostname-*-py*.egg
 %{_libdir}/%{name}/cffi-*-py*.egg
 %{_libdir}/%{name}/distribute-*-py*.egg
 %{_libdir}/%{name}/dropbox_sqlite_ext-*-py*.egg
+%{_libdir}/%{name}/futures-*-py*.egg
 %{_libdir}/%{name}/mock-*-py*.egg
+%{_libdir}/%{name}/psutil-*-py*.egg
 %{_libdir}/%{name}/pycparser-*-py*.egg-info
 %{_libdir}/%{name}/requests-*-py*.egg
+%{_libdir}/%{name}/tornado-*-py*.egg
 
 # GUI parts
 %exclude %{_libdir}/%{name}/PyQt5.*.so
