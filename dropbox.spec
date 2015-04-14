@@ -10,7 +10,7 @@
 Summary:	Sync and backup files between computers
 Name:		dropbox
 Version:	3.4.3
-Release:	0.2
+Release:	0.3
 License:	Proprietary
 Group:		Daemons
 Source0:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86-%{version}.tar.gz
@@ -137,6 +137,7 @@ rm -rf $RPM_BUILD_ROOT
 # GUI parts
 %exclude %{_libdir}/%{name}/PyQt5.*.so
 %exclude %{_libdir}/%{name}/libQt5*.so.5
+%exclude %{_libdir}/%{name}/libX11-xcb.so.1
 %exclude %{_libdir}/%{name}/dbus.mainloop.pyqt5.so
 
 %files gui
@@ -144,6 +145,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/wmctrl
 %attr(755,root,root) %{_libdir}/%{name}/PyQt5.*.so
 %attr(755,root,root) %{_libdir}/%{name}/libQt5*.so.5
+%attr(755,root,root) %{_libdir}/%{name}/libX11-xcb.so.1
 %attr(755,root,root) %{_libdir}/%{name}/dbus.mainloop.pyqt5.so
 %dir %{_libdir}/%{name}/plugins
 %dir %{_libdir}/%{name}/plugins/platforms
