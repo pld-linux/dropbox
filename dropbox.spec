@@ -10,7 +10,7 @@
 Summary:	Sync and backup files between computers
 Name:		dropbox
 Version:	3.4.3
-Release:	0.3
+Release:	0.4
 License:	Proprietary
 Group:		Daemons
 Source0:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86-%{version}.tar.gz
@@ -36,7 +36,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		icu_libs	libicudata.so.42 libicui18n.so.42 libicuuc.so.42
 
 # provided by package itself, but autodeps disabled
-%define		_noautoreq		libwx_.*.so %{icu_libs}
+%define		_noautoreq		libwx_.*.so %{icu_libs} libffi.so.6 librsync.so.1
 
 # a zip and executable at the same time
 %define		_noautostrip	.*/library.zip\\|.*/dropbox
