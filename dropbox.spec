@@ -9,15 +9,15 @@
 #   http://wiki.dropbox.com/TipsAndTricks/TextBasedLinuxInstall
 Summary:	Sync and backup files between computers
 Name:		dropbox
-Version:	3.8.6
+Version:	3.8.8
 Release:	1
 License:	Proprietary
 Group:		Daemons
 Source0:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86-%{version}.tar.gz
-# NoSource0-md5:	a27af202706b4b237237bfeeaf1e2840
+# NoSource0-md5:	b8285712e46db85815070dd21cf74f3b
 NoSource:	0
 Source1:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86_64-%{version}.tar.gz
-# NoSource1-md5:	b3a9679f3ae4faf46d3afaf26032e84f
+# NoSource1-md5:	d27298bbaaa1f955945f2021d459274d
 NoSource:	1
 URL:		http://www.dropbox.com/
 BuildRequires:	rpmbuild(macros) >= 1.566
@@ -85,17 +85,17 @@ mv dropbox-lnx.*-%{version}/* .
 #%{__rm} libffi.so.6 librsync.so.1
 #%{__rm} libQt5{Core,DBus,Gui,Network,OpenGL,PrintSupport,Qml,Quick,Sql,WebKit,WebKitWidgets,Widgets}.so.5
 
-# make into symlink, looks cleaner than hardlink:
-# we can attach executable attrs to binary and leave no attrs for symlink in
-# %files section.
-ln -sf dropbox library.zip
-
 # fun, let's delete non-linux files from archive
 unzip -l library.zip | \
 	grep -E '(arch|dropbox)/(mac|win32)|_(win32|mac).py|pymac|ui/cocoa|unittest' | \
 	grep -vE 'pymac/(__init__|constants|types|lazydll|lazyframework).py' | \
 	awk '{print $NF}' > lib.delete
 zip library.zip -d $(cat lib.delete)
+
+# make into symlink, looks cleaner than hardlink:
+# we can attach executable attrs to binary and leave no attrs for symlink in
+# %files section.
+ln -sf dropbox library.zip
 
 %install
 rm -rf $RPM_BUILD_ROOT
