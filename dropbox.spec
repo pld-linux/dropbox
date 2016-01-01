@@ -125,12 +125,23 @@ rm -rf $RPM_BUILD_ROOT
 
 %{_libdir}/%{name}/cffi-*-py*.egg
 %{_libdir}/%{name}/dropbox_sqlite_ext-*-py*.egg
+%{_libdir}/%{name}/enum34-*-py*.egg-info
 %{_libdir}/%{name}/futures-*-py*.egg
+%{_libdir}/%{name}/idna-*-py*.egg
+%{_libdir}/%{name}/ipaddress-*-py*.egg
 %{_libdir}/%{name}/mock-*-py*.egg
 %{_libdir}/%{name}/psutil-*-py*.egg
+%{_libdir}/%{name}/py-*-py*.egg
+%{_libdir}/%{name}/pyasn1-*-py*.egg
+%{_libdir}/%{name}/pytest-*-py*.egg
 %{_libdir}/%{name}/requests-*-py*.egg
 %{_libdir}/%{name}/setuptools-*-py*.egg
+%{_libdir}/%{name}/six-*-py*.egg
 %{_libdir}/%{name}/tornado-*-py*.egg
+
+# need +x bits for .so files
+%defattr(-,root,root,-)
+%{_libdir}/%{name}/cryptography-*-py*-linux-*.egg
 
 # GUI parts
 %exclude %{_libdir}/%{name}/PyQt5.*.so
