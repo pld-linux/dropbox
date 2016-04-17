@@ -9,15 +9,15 @@
 #   http://wiki.dropbox.com/TipsAndTricks/TextBasedLinuxInstall
 Summary:	Sync and backup files between computers
 Name:		dropbox
-Version:	3.14.7
+Version:	3.18.1
 Release:	1
 License:	Proprietary
 Group:		Daemons
 Source0:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86-%{version}.tar.gz
-# NoSource0-md5:	876ed05cbeeba337ef3ecf9502c9e26c
+# NoSource0-md5:	764b41df4fcbd75d91e68290f6e2fcd9
 NoSource:	0
 Source1:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86_64-%{version}.tar.gz
-# NoSource1-md5:	2e132449ec6d27d6728810c4cb89a7b4
+# NoSource1-md5:	6c99567dc78615f3a2dd1cce229f8aff
 NoSource:	1
 URL:		http://www.dropbox.com/
 BuildRequires:	rpmbuild(macros) >= 1.566
