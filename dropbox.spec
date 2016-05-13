@@ -9,15 +9,15 @@
 #   http://wiki.dropbox.com/TipsAndTricks/TextBasedLinuxInstall
 Summary:	Sync and backup files between computers
 Name:		dropbox
-Version:	3.18.1
+Version:	3.20.1
 Release:	1
 License:	Proprietary
 Group:		Daemons
 Source0:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86-%{version}.tar.gz
-# NoSource0-md5:	764b41df4fcbd75d91e68290f6e2fcd9
+# NoSource0-md5:	16771129c254907d29e64c779773493a
 NoSource:	0
 Source1:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86_64-%{version}.tar.gz
-# NoSource1-md5:	6c99567dc78615f3a2dd1cce229f8aff
+# NoSource1-md5:	3cc42ea6d41a1d9d3f13eaa0917ee510
 NoSource:	1
 URL:		http://www.dropbox.com/
 BuildRequires:	rpmbuild(macros) >= 1.566
@@ -125,17 +125,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %{_libdir}/%{name}/cffi-*-py*.egg
 %{_libdir}/%{name}/dropbox_sqlite_ext-*-py*.egg
-%{_libdir}/%{name}/enum34-*-py*.egg-info
-%{_libdir}/%{name}/futures-*-py*.egg
-%{_libdir}/%{name}/idna-*-py*.egg
-%{_libdir}/%{name}/ipaddress-*-py*.egg
-%{_libdir}/%{name}/mock-*-py*.egg
-%{_libdir}/%{name}/objgraph-*-py*.egg
 %{_libdir}/%{name}/psutil-*-py*.egg
-%{_libdir}/%{name}/pyasn1-*-py*.egg
-%{_libdir}/%{name}/requests-*-py*.egg
 %{_libdir}/%{name}/setuptools-*-py*.egg
-%{_libdir}/%{name}/six-*-py*.egg
 %{_libdir}/%{name}/tornado-*-py*.egg
 
 # need +x bits for .so files
