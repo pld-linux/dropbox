@@ -9,15 +9,15 @@
 #   http://wiki.dropbox.com/TipsAndTricks/TextBasedLinuxInstall
 Summary:	Sync and backup files between computers
 Name:		dropbox
-Version:	3.20.1
+Version:	5.4.24
 Release:	1
 License:	Proprietary
 Group:		Daemons
 Source0:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86-%{version}.tar.gz
-# NoSource0-md5:	16771129c254907d29e64c779773493a
+# NoSource0-md5:	812050dfd781ea1937481f0fb6953547
 NoSource:	0
 Source1:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86_64-%{version}.tar.gz
-# NoSource1-md5:	3cc42ea6d41a1d9d3f13eaa0917ee510
+# NoSource1-md5:	aeef1a6ba78ac3d1ee11dab539c181d9
 NoSource:	1
 URL:		http://www.dropbox.com/
 BuildRequires:	rpmbuild(macros) >= 1.566
@@ -123,7 +123,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/dropboxd
 %{_libdir}/%{name}/library.zip
 
-%{_libdir}/%{name}/cffi-*-py*.egg
 %{_libdir}/%{name}/dropbox_sqlite_ext-*-py*.egg
 %{_libdir}/%{name}/psutil-*-py*.egg
 %{_libdir}/%{name}/setuptools-*-py*.egg
