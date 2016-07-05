@@ -9,6 +9,7 @@
 #   http://wiki.dropbox.com/TipsAndTricks/TextBasedLinuxInstall
 Summary:	Sync and backup files between computers
 Name:		dropbox
+# https://www.dropboxforum.com/hc/en-us/community/posts/206682016-New-Versioning-Scheme
 Version:	5.4.24
 Release:	1
 License:	Proprietary
@@ -80,10 +81,13 @@ mv dropbox-lnx.*-%{version}/* .
 #%{__rm} -r distribute-0.6.26-py2.7.egg
 
 # libraries to be taken from system
-# for a in *.so*; do ls -ld /lib64/$a %{_libdir}/$a; done 2>/dev/null
+# for a in *.so*; do ls -ld /lib64/$a /us?/lib64/$a; done 2>/dev/null
 %{__rm} libpopt.so.0 libdrm.so.2 libGL.so.1
-#%{__rm} libffi.so.6 librsync.so.1
-#%{__rm} libQt5{Core,DBus,Gui,Network,OpenGL,PrintSupport,Qml,Quick,Sql,WebKit,WebKitWidgets,Widgets}.so.5
+%{__rm} libffi.so.6 librsync.so.1
+%{__rm} libX11-xcb.so.1
+%{__rm} libQt5{Core,DBus,Gui,Network,OpenGL,PrintSupport,Qml,Quick,Sql,WebKit,WebKitWidgets,Widgets,XcbQpa}.so.5
+%{__rm} qt.conf
+%{__rm} -r plugins
 
 # fun, let's delete non-linux files from archive
 unzip -l library.zip | \
@@ -135,21 +139,13 @@ rm -rf $RPM_BUILD_ROOT
 
 # GUI parts
 %exclude %{_libdir}/%{name}/PyQt5.*.so
-%exclude %{_libdir}/%{name}/libQt5*.so.5
-%exclude %{_libdir}/%{name}/libX11-xcb.so.1
 %exclude %{_libdir}/%{name}/dbus.mainloop.pyqt5.so
 
 %files gui
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/wmctrl
 %attr(755,root,root) %{_libdir}/%{name}/PyQt5.*.so
-%attr(755,root,root) %{_libdir}/%{name}/libQt5*.so.5
-%attr(755,root,root) %{_libdir}/%{name}/libX11-xcb.so.1
 %attr(755,root,root) %{_libdir}/%{name}/dbus.mainloop.pyqt5.so
-%dir %{_libdir}/%{name}/plugins
-%dir %{_libdir}/%{name}/plugins/platforms
-%attr(755,root,root) %{_libdir}/%{name}/plugins/platforms/libqxcb.so
-%{_libdir}/%{name}/qt.conf
 %dir %{_libdir}/%{name}/images
 %{_libdir}/%{name}/images/emblems
 %{_libdir}/%{name}/images/hicolor
