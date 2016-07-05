@@ -87,8 +87,9 @@ mv dropbox-lnx.*-%{version}/* .
 
 # fun, let's delete non-linux files from archive
 unzip -l library.zip | \
-	grep -E '(arch|dropbox)/(mac|win32)|_(win32|mac).py|pymac|ui/cocoa|unittest' | \
-	grep -vE 'pymac/(__init__|constants|types|lazydll|lazyframework).py' | \
+	grep -E '(arch|dropbox)/(mac|win32)|_(win32|mac)\.py|pymac|ui/cocoa|unittest' | \
+	grep -vE 'pymac/(__init__|constants|types|lazydll|lazyframework)\.py' | \
+	grep -vE 'dropbox/mac/(version|__init__).py' | \
 	awk '{print $NF}' > lib.delete
 zip library.zip -d $(cat lib.delete)
 
