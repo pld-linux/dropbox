@@ -83,11 +83,14 @@ mv dropbox-lnx.*-%{version}/* .
 # libraries to be taken from system
 # for a in *.so*; do ls -ld /lib64/$a /us?/lib64/$a; done 2>/dev/null
 %{__rm} libpopt.so.0 libdrm.so.2 libGL.so.1
-%{__rm} libffi.so.6 librsync.so.1
+%{__rm} libffi.so.6
 %{__rm} libX11-xcb.so.1
 %{__rm} libQt5{Core,DBus,Gui,Network,OpenGL,PrintSupport,Qml,Quick,Sql,WebKit,WebKitWidgets,Widgets,XcbQpa}.so.5
 %{__rm} qt.conf
 %{__rm} -r plugins
+
+# keep librsync, won't finish syncing if not using upstream copy
+%{__rm} librsync.so.1
 
 # fun, let's delete non-linux files from archive
 unzip -l library.zip | \
