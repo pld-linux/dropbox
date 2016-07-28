@@ -90,7 +90,7 @@ mv dropbox-lnx.*-%{version}/* .
 %{__rm} -r plugins
 
 # keep librsync, won't finish syncing if not using upstream copy
-%{__rm} librsync.so.1
+test -f librsync.so.1
 
 # fun, let's delete non-linux files from archive
 unzip -l library.zip | \
