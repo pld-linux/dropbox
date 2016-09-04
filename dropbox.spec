@@ -10,15 +10,15 @@
 Summary:	Sync and backup files between computers
 Name:		dropbox
 # https://www.dropboxforum.com/hc/en-us/community/posts/206682016-New-Versioning-Scheme
-Version:	7.4.30
+Version:	8.4.21
 Release:	1
 License:	Proprietary
 Group:		Daemons
 Source0:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86-%{version}.tar.gz
-# NoSource0-md5:	164c3f67df0b3959928255867ed89f6c
+# NoSource0-md5:	2488a014d34f85b9abac33fcc828e2ef
 NoSource:	0
 Source1:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86_64-%{version}.tar.gz
-# NoSource1-md5:	8786d917614c3fc21768b8b3ba0e818f
+# NoSource1-md5:	5e8e8957f220090db9a33256bf9c85f3
 NoSource:	1
 URL:		http://www.dropbox.com/
 BuildRequires:	rpmbuild(macros) >= 1.566
@@ -134,7 +134,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/dropbox_sqlite_ext-*-py*.egg
 %{_libdir}/%{name}/psutil-*-py*.egg
 %{_libdir}/%{name}/setuptools-*-py*.egg
-%{_libdir}/%{name}/tornado-*-py*.egg
 
 # need +x bits for .so files
 %defattr(-,root,root,-)
