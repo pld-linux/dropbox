@@ -10,15 +10,15 @@
 Summary:	Sync and backup files between computers
 Name:		dropbox
 # https://www.dropboxforum.com/hc/en-us/community/posts/206682016-New-Versioning-Scheme
-Version:	19.4.12
+Version:	22.4.24
 Release:	1
 License:	Proprietary
 Group:		Daemons
 Source0:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86-%{version}.tar.gz
-# NoSource0-md5:	8fa7edf10b7ac6fcc2e1f4bf7300071a
+# NoSource0-md5:	df37c09b065aaf7701281ab727843580
 NoSource:	0
 Source1:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86_64-%{version}.tar.gz
-# NoSource1-md5:	7a1eed8e1b35ee17b7870356b5318f83
+# NoSource1-md5:	8e02a201fd76628fa73c5a5252f0041a
 NoSource:	1
 URL:		http://www.dropbox.com/
 BuildRequires:	rpmbuild(macros) >= 1.566
@@ -131,13 +131,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/dropboxd
 %{_libdir}/%{name}/library.zip
 
-%{_libdir}/%{name}/dropbox_sqlite_ext-*-py*.egg
-%{_libdir}/%{name}/psutil-*-py*.egg
-%{_libdir}/%{name}/setuptools-*-py*.egg
-
 # need +x bits for .so files
 %defattr(-,root,root,-)
-%{_libdir}/%{name}/cryptography-*-py*-linux-*.egg
+%{_libdir}/%{name}/dropbox_sqlite_ext-*-py*.egg
+%{_libdir}/%{name}/setuptools-*-py*.egg
 
 # GUI parts
 %exclude %{_libdir}/%{name}/PyQt5.*.so
