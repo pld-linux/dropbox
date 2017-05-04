@@ -10,15 +10,15 @@
 Summary:	Sync and backup files between computers
 Name:		dropbox
 # https://www.dropboxforum.com/hc/en-us/community/posts/206682016-New-Versioning-Scheme
-Version:	22.4.24
+Version:	25.4.28
 Release:	1
 License:	Proprietary
 Group:		Daemons
 Source0:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86-%{version}.tar.gz
-# NoSource0-md5:	df37c09b065aaf7701281ab727843580
+# NoSource0-md5:	306888741ec9295d6669d96f53e60733
 NoSource:	0
 Source1:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86_64-%{version}.tar.gz
-# NoSource1-md5:	8e02a201fd76628fa73c5a5252f0041a
+# NoSource1-md5:	1816b71534744bfde2245752ea7ff84f
 NoSource:	1
 URL:		http://www.dropbox.com/
 BuildRequires:	rpmbuild(macros) >= 1.566
