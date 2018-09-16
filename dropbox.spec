@@ -10,17 +10,17 @@
 Summary:	Sync and backup files between computers
 Name:		dropbox
 # https://www.dropboxforum.com/hc/en-us/community/posts/206682016-New-Versioning-Scheme
-Version:	40.4.46
+Version:	57.4.89
 Release:	1
 License:	Proprietary
 Group:		Daemons
-Source0:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86-%{version}.tar.gz
-# NoSource0-md5:	ea0109760ff76a332b21ad1bf445a3fa
+Source0:	https://clientupdates.dropboxstatic.com/dbx-releng/client/%{name}-lnx.x86-%{version}.tar.gz
+# NoSource0-md5:	588d447e23c863610c187edb06ad00cd
 NoSource:	0
-Source1:	http://dl-web.dropbox.com/u/17/%{name}-lnx.x86_64-%{version}.tar.gz
-# NoSource1-md5:	4b412e0d4d5b9604abc6bb18a20f099b
+Source1:	https://clientupdates.dropboxstatic.com/dbx-releng/client/%{name}-lnx.x86_64-%{version}.tar.gz
+# NoSource1-md5:	4db20dc1a388d8a7b5dd08d11f7ea2db
 NoSource:	1
-URL:		http://www.dropbox.com/
+URL:		https://www.dropbox.com/
 BuildRequires:	rpmbuild(macros) >= 1.566
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.15.1
@@ -33,7 +33,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 # generate no Provides from private modules
 %define		_noautoprovfiles	%{_libdir}/%{name}
 
-# libicu-42, but pld th already has 54
+# libicu-42, but pld th already has 59+
 %define		icu_libs	libicudata.so.42 libicui18n.so.42 libicuuc.so.42
 
 # provided by package itself, but autodeps disabled
@@ -92,18 +92,16 @@ mv dropbox-lnx.*-%{version}/* .
 # keep librsync, won't finish syncing if not using upstream copy
 test -f librsync.so.1
 
+%if 1
 # fun, let's delete non-linux files from archive
-unzip -l library.zip | \
+unzip -l python-packages-35.zip | \
 	grep -E '(arch|dropbox)/(mac|win32)|_(win32|mac)\.py|pymac|ui/cocoa|unittest' | \
 	grep -vE 'pymac/(__init__|constants|types|lazydll|lazyframework)\.py' | \
 	grep -vE 'dropbox/mac/(version|__init__).py' | \
 	awk '{print $NF}' > lib.delete
-zip library.zip -d $(cat lib.delete)
-
-# make into symlink, looks cleaner than hardlink:
-# we can attach executable attrs to binary and leave no attrs for symlink in
-# %files section.
-ln -sf dropbox library.zip
+zip python-packages-35.zip -d $(cat lib.delete)
+rm lib.delete
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -113,7 +111,6 @@ ln -s %{_libdir}/%{name}/dropboxd $RPM_BUILD_ROOT%{_bindir}/dropboxd
 # install everything else
 install -d $RPM_BUILD_ROOT%{_libdir}/%{name}
 cp -a . $RPM_BUILD_ROOT%{_libdir}/%{name}
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}/lib.delete
 
 # in doc
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}/{ACKNOWLEDGEMENTS,VERSION,README}
@@ -126,25 +123,26 @@ rm -rf $RPM_BUILD_ROOT
 %doc ACKNOWLEDGEMENTS VERSION README
 %attr(755,root,root) %{_bindir}/dropboxd
 %dir %{_libdir}/%{name}
-%attr(755,root,root) %{_libdir}/%{name}/*.so*
+%attr(755,root,root) %{_libdir}/%{name}/*-linux-gnu.so
 %attr(755,root,root) %{_libdir}/%{name}/dropbox
 %attr(755,root,root) %{_libdir}/%{name}/dropboxd
-%{_libdir}/%{name}/library.zip
+%attr(755,root,root) %{_libdir}/%{name}/libdropbox_sqlite_ext.so
+%attr(755,root,root) %{_libdir}/%{name}/libicudata.so.*
+%attr(755,root,root) %{_libdir}/%{name}/libicui18n.so.*
+%attr(755,root,root) %{_libdir}/%{name}/libicuuc.so.*
+%attr(755,root,root) %{_libdir}/%{name}/librsync.so.1
+%{_libdir}/%{name}/python-packages-*.zip
 
 # need +x bits for .so files
 %defattr(-,root,root,-)
-%{_libdir}/%{name}/dropbox_sqlite_ext-*-py*.egg
-%{_libdir}/%{name}/setuptools-*-py*.egg
 
 # GUI parts
 %exclude %{_libdir}/%{name}/PyQt5.*.so
-%exclude %{_libdir}/%{name}/dbus.mainloop.pyqt5.so
 
 %files gui
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/wmctrl
 %attr(755,root,root) %{_libdir}/%{name}/PyQt5.*.so
-%attr(755,root,root) %{_libdir}/%{name}/dbus.mainloop.pyqt5.so
+%attr(755,root,root) %{_libdir}/%{name}/wmctrl
 %dir %{_libdir}/%{name}/images
 %{_libdir}/%{name}/images/emblems
 %{_libdir}/%{name}/images/hicolor
