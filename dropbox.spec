@@ -10,15 +10,15 @@
 Summary:	Sync and backup files between computers
 Name:		dropbox
 # https://www.dropboxforum.com/hc/en-us/community/posts/206682016-New-Versioning-Scheme
-Version:	66.4.84
+Version:	74.4.115
 Release:	1
 License:	Proprietary
 Group:		Daemons
 Source0:	https://clientupdates.dropboxstatic.com/dbx-releng/client/%{name}-lnx.x86-%{version}.tar.gz
-# NoSource0-md5:	95a25bc9e57e053defc133e67e590c5c
+# NoSource0-md5:	197b4caf00a2c05494f894b5ef578994
 NoSource:	0
 Source1:	https://clientupdates.dropboxstatic.com/dbx-releng/client/%{name}-lnx.x86_64-%{version}.tar.gz
-# NoSource1-md5:	3a28db85d941c5d8628964684370e788
+# NoSource1-md5:	9766ca09c132a47a0763c840ecc3a5e7
 NoSource:	1
 URL:		https://www.dropbox.com/
 BuildRequires:	rpmbuild(macros) >= 1.566
@@ -95,13 +95,13 @@ test -f librsync.so.1
 %if 1
 # fun, let's delete non-linux files from archive
 d=.delete-lib.txt
-unzip -l python-packages-36.zip | \
+unzip -l python-packages-37.zip | \
 	grep -E '(arch|dropbox)/(mac|win32)|_(win32|mac)\.py|pymac|ui/cocoa|unittest' | \
 	grep -vE 'pymac/(__init__|constants|types|lazydll|lazyframework)\.py' | \
 	grep -vE 'dropbox/mac/(version|__init__)\.py' | \
 	grep -vF 'dropbox/client/features/files/local/operations/_mac.py' | \
 	awk '{print $NF}' > $d
-zip python-packages-36.zip -d $(cat $d)
+zip python-packages-37.zip -d $(cat $d)
 %endif
 
 %install
