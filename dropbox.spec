@@ -10,15 +10,15 @@
 Summary:	Sync and backup files between computers
 Name:		dropbox
 # https://www.dropboxforum.com/hc/en-us/community/posts/206682016-New-Versioning-Scheme
-Version:	74.4.115
+Version:	85.4.155
 Release:	1
 License:	Proprietary
 Group:		Daemons
 Source0:	https://clientupdates.dropboxstatic.com/dbx-releng/client/%{name}-lnx.x86-%{version}.tar.gz
-# NoSource0-md5:	197b4caf00a2c05494f894b5ef578994
+# NoSource0-md5:	3b69411fc86c140331aa3866f201f48f
 NoSource:	0
 Source1:	https://clientupdates.dropboxstatic.com/dbx-releng/client/%{name}-lnx.x86_64-%{version}.tar.gz
-# NoSource1-md5:	9766ca09c132a47a0763c840ecc3a5e7
+# NoSource1-md5:	83b0175cdaa5e93cb4ac879d7d919d6c
 NoSource:	1
 URL:		https://www.dropbox.com/
 BuildRequires:	rpmbuild(macros) >= 1.566
@@ -127,7 +127,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/*-linux-gnu.so
 %attr(755,root,root) %{_libdir}/%{name}/dropbox
 %attr(755,root,root) %{_libdir}/%{name}/dropboxd
+%attr(755,root,root) %{_libdir}/%{name}/libdropbox_apex.so
+%attr(755,root,root) %{_libdir}/%{name}/libdropbox_nucleus.so
 %attr(755,root,root) %{_libdir}/%{name}/libdropbox_sqlite_ext.so
+%attr(755,root,root) %{_libdir}/%{name}/libdropbox_tprt.so
 %attr(755,root,root) %{_libdir}/%{name}/libicudata.so.*
 %attr(755,root,root) %{_libdir}/%{name}/libicui18n.so.*
 %attr(755,root,root) %{_libdir}/%{name}/libicuuc.so.*
