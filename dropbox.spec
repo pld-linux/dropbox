@@ -10,15 +10,15 @@
 Summary:	Sync and backup files between computers
 Name:		dropbox
 # https://www.dropboxforum.com/hc/en-us/community/posts/206682016-New-Versioning-Scheme
-Version:	85.4.155
+Version:	89.4.278
 Release:	1
 License:	Proprietary
 Group:		Daemons
 Source0:	https://clientupdates.dropboxstatic.com/dbx-releng/client/%{name}-lnx.x86-%{version}.tar.gz
-# NoSource0-md5:	3b69411fc86c140331aa3866f201f48f
+# NoSource0-md5:	c8f19efec158b4aec27ac65aea4b2c95
 NoSource:	0
 Source1:	https://clientupdates.dropboxstatic.com/dbx-releng/client/%{name}-lnx.x86_64-%{version}.tar.gz
-# NoSource1-md5:	83b0175cdaa5e93cb4ac879d7d919d6c
+# NoSource1-md5:	2c285eeeec6c95f68b4082e1f60b1fe6
 NoSource:	1
 URL:		https://www.dropbox.com/
 BuildRequires:	rpmbuild(macros) >= 1.566
@@ -37,7 +37,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		icu_libs	libicudata.so.42 libicui18n.so.42 libicuuc.so.42
 
 # provided by package itself, but autodeps disabled
-%define		_noautoreq		libwx_.*.so %{icu_libs} libffi.so.6 librsync.so.1
+%define		_noautoreq		libwx_.*.so %{icu_libs} libffi.so.6 librsync.so.1 libdropbox_apex.so libdropbox_nucleus.so libdropbox_tprt.so
 
 # a zip and executable at the same time
 %define		_noautostrip	.*/library.zip\\|.*/dropbox
@@ -95,13 +95,13 @@ test -f librsync.so.1
 %if 1
 # fun, let's delete non-linux files from archive
 d=.delete-lib.txt
-unzip -l python-packages-37.zip | \
+unzip -l python-packages.zip | \
 	grep -E '(arch|dropbox)/(mac|win32)|_(win32|mac)\.py|pymac|ui/cocoa|unittest' | \
 	grep -vE 'pymac/(__init__|constants|types|lazydll|lazyframework)\.py' | \
 	grep -vE 'dropbox/mac/(version|__init__)\.py' | \
 	grep -vF 'dropbox/client/features/files/local/operations/_mac.py' | \
 	awk '{print $NF}' > $d
-zip python-packages-37.zip -d $(cat $d)
+zip python-packages.zip -d $(cat $d)
 %endif
 
 %install
@@ -127,6 +127,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/*-linux-gnu.so
 %attr(755,root,root) %{_libdir}/%{name}/dropbox
 %attr(755,root,root) %{_libdir}/%{name}/dropboxd
+%attr(755,root,root) %{_libdir}/%{name}/libatomic.so.1
 %attr(755,root,root) %{_libdir}/%{name}/libdropbox_apex.so
 %attr(755,root,root) %{_libdir}/%{name}/libdropbox_nucleus.so
 %attr(755,root,root) %{_libdir}/%{name}/libdropbox_sqlite_ext.so
@@ -135,7 +136,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/libicui18n.so.*
 %attr(755,root,root) %{_libdir}/%{name}/libicuuc.so.*
 %attr(755,root,root) %{_libdir}/%{name}/librsync.so.1
-%{_libdir}/%{name}/python-packages-*.zip
+%{_libdir}/%{name}/python-packages.zip
 
 # need +x bits for .so files
 %defattr(-,root,root,-)
