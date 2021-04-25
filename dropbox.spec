@@ -11,7 +11,7 @@ Summary:	Sync and backup files between computers
 Name:		dropbox
 # https://www.dropboxforum.com/hc/en-us/community/posts/206682016-New-Versioning-Scheme
 Version:	89.4.278
-Release:	1
+Release:	2
 License:	Proprietary
 Group:		Daemons
 Source0:	https://clientupdates.dropboxstatic.com/dbx-releng/client/%{name}-lnx.x86-%{version}.tar.gz
@@ -83,7 +83,6 @@ mv dropbox-lnx.*-%{version}/* .
 # libraries to be taken from system
 # for a in *.so*; do ls -ld /lib64/$a /us?/lib64/$a; done 2>/dev/null
 %{__rm} libpopt.so.0 libdrm.so.2 libGL.so.1
-%{__rm} libffi.so.6
 %{__rm} libX11-xcb.so.1
 %{__rm} libQt5{Core,DBus,Gui,Network,OpenGL,PrintSupport,Qml,Quick,Sql,WebKit,WebKitWidgets,Widgets,XcbQpa}.so.5
 %{__rm} qt.conf
@@ -132,6 +131,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/libdropbox_nucleus.so
 %attr(755,root,root) %{_libdir}/%{name}/libdropbox_sqlite_ext.so
 %attr(755,root,root) %{_libdir}/%{name}/libdropbox_tprt.so
+%attr(755,root,root) %{_libdir}/%{name}/libffi.so.6
 %attr(755,root,root) %{_libdir}/%{name}/libicudata.so.*
 %attr(755,root,root) %{_libdir}/%{name}/libicui18n.so.*
 %attr(755,root,root) %{_libdir}/%{name}/libicuuc.so.*
