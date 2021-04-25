@@ -1,3 +1,8 @@
+#
+# Conditional build:
+%bcond_with	system_qt		# Remove bundled Qt5
+%bcond_with	rewrite_zip		# Remove Python modules this platform has no use
+
 # TODO
 # - avoid dropboxd relaunching itself with newer version if there's update available (disable auto updating):
 #   glen     25034 19.9  1.5 1496132 81256 pts/46  Sl+  11:02   1:02 /home/glen/.dropbox-dist/dropbox /newerversion
@@ -85,20 +90,23 @@ mv dropbox-lnx.*-%{version}/* .
 %{__rm} libpopt.so.0 libdrm.so.2 libGL.so.1
 %{__rm} libX11-xcb.so.1
 %{__rm} libffi.so.7*
+%if %{with system_qt}
 %{__rm} libQt5{Core,DBus,Gui,Network,OpenGL,PrintSupport,Qml,Quick,Sql,WebKit,WebKitWidgets,Widgets,XcbQpa}.so.5
 %{__rm} qt.conf
 %{__rm} -r plugins
+%endif
 
 # keep librsync, won't finish syncing if not using upstream copy
 #test -f librsync.so.1
 
-%if 1
-# fun, let's delete non-linux files from archive
+%if %{with rewrite_zip}
+# For fun, let's delete non-Linux files from archive
 d=.delete-lib.txt
 unzip -l python-packages.zip | \
 	grep -E '(arch|dropbox)/(mac|win32)|_(win32|mac)\.py|pymac|ui/cocoa|unittest' | \
 	grep -vE 'pymac/(__init__|constants|types|lazydll|lazyframework)\.py' | \
 	grep -vE 'dropbox/mac/(version|__init__)\.py' | \
+	grep -vE 'dropbox/win32/(__init__|microsoft_store)\.py' | \
 	grep -vF 'dropbox/client/features/files/local/operations/_mac.py' | \
 	awk '{print $NF}' > $d
 zip python-packages.zip -d $(cat $d)
@@ -144,6 +152,25 @@ rm -rf $RPM_BUILD_ROOT
 
 %files gui
 %defattr(644,root,root,755)
+%if %{without system_qt}
+%{_libdir}/%{name}/qt.conf
+%attr(755,root,root) %{_libdir}/%{name}/libQt5Core.so.5
+%attr(755,root,root) %{_libdir}/%{name}/libQt5DBus.so.5
+%attr(755,root,root) %{_libdir}/%{name}/libQt5Gui.so.5
+%attr(755,root,root) %{_libdir}/%{name}/libQt5Network.so.5
+%attr(755,root,root) %{_libdir}/%{name}/libQt5OpenGL.so.5
+%attr(755,root,root) %{_libdir}/%{name}/libQt5PrintSupport.so.5
+%attr(755,root,root) %{_libdir}/%{name}/libQt5Qml.so.5
+%attr(755,root,root) %{_libdir}/%{name}/libQt5Quick.so.5
+%attr(755,root,root) %{_libdir}/%{name}/libQt5Sql.so.5
+%attr(755,root,root) %{_libdir}/%{name}/libQt5WebKit.so.5
+%attr(755,root,root) %{_libdir}/%{name}/libQt5WebKitWidgets.so.5
+%attr(755,root,root) %{_libdir}/%{name}/libQt5Widgets.so.5
+%attr(755,root,root) %{_libdir}/%{name}/libQt5XcbQpa.so.5
+%dir %{_libdir}/%{name}/plugins
+%dir %{_libdir}/%{name}/plugins/platforms
+%attr(755,root,root) %{_libdir}/%{name}/plugins/platforms/libqxcb.so
+%endif
 %attr(755,root,root) %{_libdir}/%{name}/PyQt5.*.so
 %attr(755,root,root) %{_libdir}/%{name}/wmctrl
 %dir %{_libdir}/%{name}/images
