@@ -5,20 +5,20 @@
 # - Upstream Dropbox Support (https://www.dropbox.com/ticket)
 # - Release Notes (check new versions here): https://www.dropbox.com/release_notes
 # - Download instructions (click the download link to find current version):
-#   http://www.dropbox.com/downloading?os=lnx
+#   https://www.dropbox.com/install-linux
 #   http://wiki.dropbox.com/TipsAndTricks/TextBasedLinuxInstall
 Summary:	Sync and backup files between computers
 Name:		dropbox
 # https://www.dropboxforum.com/hc/en-us/community/posts/206682016-New-Versioning-Scheme
-Version:	89.4.278
-Release:	2
+Version:	120.4.4598
+Release:	1
 License:	Proprietary
 Group:		Daemons
-Source0:	https://clientupdates.dropboxstatic.com/dbx-releng/client/%{name}-lnx.x86-%{version}.tar.gz
-# NoSource0-md5:	c8f19efec158b4aec27ac65aea4b2c95
+Source0:	https://edge.dropboxstatic.com/dbx-releng/client/%{name}-lnx.x86-%{version}.tar.gz
+# NoSource0-md5:	52991f3923be7159c28223e12301612d
 NoSource:	0
-Source1:	https://clientupdates.dropboxstatic.com/dbx-releng/client/%{name}-lnx.x86_64-%{version}.tar.gz
-# NoSource1-md5:	2c285eeeec6c95f68b4082e1f60b1fe6
+Source1:	https://edge.dropboxstatic.com/dbx-releng/client/%{name}-lnx.x86_64-%{version}.tar.gz
+# NoSource1-md5:	be3ec8b3423f08d5b808a93b8f053a9f
 NoSource:	1
 URL:		https://www.dropbox.com/
 BuildRequires:	rpmbuild(macros) >= 1.566
@@ -37,7 +37,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		icu_libs	libicudata.so.42 libicui18n.so.42 libicuuc.so.42
 
 # provided by package itself, but autodeps disabled
-%define		_noautoreq		libwx_.*.so %{icu_libs} libffi.so.6 librsync.so.1 libdropbox_apex.so libdropbox_nucleus.so libdropbox_tprt.so
+%define		_noautoreq		libwx_.*.so %{icu_libs} librsync.so.1 libdropbox_core.so libdropbox_tprt.so
 
 # a zip and executable at the same time
 %define		_noautostrip	.*/library.zip\\|.*/dropbox
@@ -84,12 +84,13 @@ mv dropbox-lnx.*-%{version}/* .
 # for a in *.so*; do ls -ld /lib64/$a /us?/lib64/$a; done 2>/dev/null
 %{__rm} libpopt.so.0 libdrm.so.2 libGL.so.1
 %{__rm} libX11-xcb.so.1
+%{__rm} libffi.so.7*
 %{__rm} libQt5{Core,DBus,Gui,Network,OpenGL,PrintSupport,Qml,Quick,Sql,WebKit,WebKitWidgets,Widgets,XcbQpa}.so.5
 %{__rm} qt.conf
 %{__rm} -r plugins
 
 # keep librsync, won't finish syncing if not using upstream copy
-test -f librsync.so.1
+#test -f librsync.so.1
 
 %if 1
 # fun, let's delete non-linux files from archive
@@ -127,15 +128,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/dropbox
 %attr(755,root,root) %{_libdir}/%{name}/dropboxd
 %attr(755,root,root) %{_libdir}/%{name}/libatomic.so.1
-%attr(755,root,root) %{_libdir}/%{name}/libdropbox_apex.so
-%attr(755,root,root) %{_libdir}/%{name}/libdropbox_nucleus.so
+%attr(755,root,root) %{_libdir}/%{name}/libdropbox_core.so
 %attr(755,root,root) %{_libdir}/%{name}/libdropbox_sqlite_ext.so
 %attr(755,root,root) %{_libdir}/%{name}/libdropbox_tprt.so
-%attr(755,root,root) %{_libdir}/%{name}/libffi.so.6
 %attr(755,root,root) %{_libdir}/%{name}/libicudata.so.*
 %attr(755,root,root) %{_libdir}/%{name}/libicui18n.so.*
 %attr(755,root,root) %{_libdir}/%{name}/libicuuc.so.*
-%attr(755,root,root) %{_libdir}/%{name}/librsync.so.1
 %{_libdir}/%{name}/python-packages.zip
 
 # need +x bits for .so files
