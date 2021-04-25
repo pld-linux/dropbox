@@ -41,8 +41,10 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 # libicu-42, but pld th already has 59+
 %define		icu_libs	libicudata.so.42 libicui18n.so.42 libicuuc.so.42
 
+%define		qt_libs		libQt5(Core|DBus|Gui|Network|OpenGL|PrintSupport|Qml|Quick|Sql|WebKit|WebKitWidgets|Widgets|XcbQpa).so.5 libqxcb.so
+
 # provided by package itself, but autodeps disabled
-%define		_noautoreq		libwx_.*.so %{icu_libs} librsync.so.1 libdropbox_core.so libdropbox_tprt.so
+%define		_noautoreq		libwx_.*.so %{icu_libs} %{!?system_qt:%{qt_libs}} librsync.so.1 libdropbox_core.so libdropbox_tprt.so
 
 # a zip and executable at the same time
 %define		_noautostrip	.*/library.zip\\|.*/dropbox
