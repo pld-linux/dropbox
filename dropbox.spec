@@ -15,15 +15,15 @@
 Summary:	Sync and backup files between computers
 Name:		dropbox
 # https://www.dropboxforum.com/hc/en-us/community/posts/206682016-New-Versioning-Scheme
-Version:	120.4.4598
+Version:	157.4.4808
 Release:	1
 License:	Proprietary
 Group:		Daemons
 Source0:	https://edge.dropboxstatic.com/dbx-releng/client/%{name}-lnx.x86-%{version}.tar.gz
-# NoSource0-md5:	52991f3923be7159c28223e12301612d
+# NoSource0-md5:	a8b605277aaafaf9303a6a21ec15a041
 NoSource:	0
 Source1:	https://edge.dropboxstatic.com/dbx-releng/client/%{name}-lnx.x86_64-%{version}.tar.gz
-# NoSource1-md5:	be3ec8b3423f08d5b808a93b8f053a9f
+# NoSource1-md5:	2b619997b08296671ed51f83415c7814
 NoSource:	1
 URL:		https://www.dropbox.com/
 BuildRequires:	rpmbuild(macros) >= 1.566
@@ -117,7 +117,7 @@ zip python-packages.zip -d $(cat $d)
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_bindir}
-ln -s %{_libdir}/%{name}/dropboxd $RPM_BUILD_ROOT%{_bindir}/dropboxd
+ln -s --relative %{_libdir}/%{name}/dropboxd $RPM_BUILD_ROOT%{_bindir}/dropboxd
 
 # install everything else
 install -d $RPM_BUILD_ROOT%{_libdir}/%{name}
@@ -144,6 +144,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/libicudata.so.*
 %attr(755,root,root) %{_libdir}/%{name}/libicui18n.so.*
 %attr(755,root,root) %{_libdir}/%{name}/libicuuc.so.*
+%attr(755,root,root) %{_libdir}/%{name}/libpython3.8.so.*.*
 %{_libdir}/%{name}/python-packages.zip
 
 # need +x bits for .so files
